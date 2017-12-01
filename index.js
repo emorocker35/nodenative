@@ -9,10 +9,16 @@ console.log(`native addon whoami: ${addon.whoami()}`)
 //}
 
 
-
 var http = require('http');
-http.createServer(function (req, res) {
-    console.log('Got request for ' + req.url);
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.end(`native addon whoami: ${addon.whoami()}`);
-}).listen(process.env.PORT);
+
+var server = http.createServer(function(request, response) {
+
+    response.writeHead(200, {"Content-Type": "text/plain"});
+    response.end(`native addon whoami: ${addon.whoami()}`);
+
+});
+
+var port = process.env.PORT || 1337;
+server.listen(port);
+
+console.log("Server running at http://localhost:%d", port);
